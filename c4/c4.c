@@ -127,8 +127,8 @@ int get_phone_list()
 {
 	int idx=0;
 	while(TRUE){
-		if(cursor==file_info.end){
-			break;
+		if(cursor+1==file_info.end){
+			return 0;
 		}
 		phone_book.list[idx]=get_phone_info();
 		phone_book.cnt++;
@@ -152,7 +152,7 @@ void print_phone_info(phone_info_t* phone_info)
 void print_phone_book()
 {
 	int idx=0;
-	for(;idx<phone_book.cnt;idx++){
+	for(idx=0;idx<phone_book.cnt;idx++){
 		print_phone_info(phone_book.list[idx]);
 	}
 }
@@ -211,6 +211,7 @@ int delete_info()
 		return -1;
 	}
 	phone_book.list[delete_idx]=phone_book.list[phone_book.cnt-1];	
+	free(phone_book.list[phone_book.cnt-1]);
 	phone_book.cnt--;
 	return 0;
 }
@@ -242,8 +243,6 @@ int write_file(char* file_path)
 		size=strlen(phone_book.list[idx]->phone_number);
 		write(fd,phone_book.list[idx]->phone_number,size);
 		write(fd,"\n",1);
-
-
 	}
 
 	close(fd);
