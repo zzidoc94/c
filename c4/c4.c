@@ -127,7 +127,7 @@ int get_phone_list()
 {
 	int idx=0;
 	while(TRUE){
-		if(cursor+1==file_info.end){
+		if(cursor==file_info.end){
 			break;
 		}
 		phone_book.list[idx]=get_phone_info();
